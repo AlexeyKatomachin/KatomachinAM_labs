@@ -28,13 +28,16 @@ public:
 
     ~Spisok ()
     {
-		while (a!=nullptr)
+		while (a!=a->next)
 		{
 			Node *p;
 			p=a->next;
+
 			delete a;
 			a=p;
+			b->next=a;
 		}
+		delete a;
     }
 };
 
@@ -54,7 +57,7 @@ void Spisok::pop(int t)
         p->x=t;
         p->next=a;
         a=p;
-		delete p;
+		b->next=a;
     }
 }
 
@@ -71,7 +74,7 @@ int Spisok::push(int &t)
         t=b->x;
         p->next=b->next;
         delete b;
-        p=b;
+        b=p;
         return 0;
     }
     else
@@ -96,17 +99,16 @@ int main()
 {
     Spisok n;
     Node m;
+	bool m_exit=true;
     int t;
     int k=0;
     int rez;
     cout<<"1-Enter the element\n"
 		<<"2-Delete the element\n"
 		<<"3-Exit\n";
-	while(1)
+	while(m_exit)
 	{
     cin>>k;
-	if(k==3)
-		break;
     switch (k)
 	{
 case 1:
@@ -117,15 +119,15 @@ case 1:
 case 2:
     rez=n.push(t);
     if(rez==0)
-    cout<<"Dlete element is "<<t;
+    cout<<"Dlete element is \n"<<t;
     else
-        cout<<"No element";
+        cout<<"No element\n";
     break;
 case 3:
+	m_exit=false;
     break;
 	}
 	}
-    getch();
     return 0;
 
 }
